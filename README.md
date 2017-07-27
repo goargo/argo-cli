@@ -13,6 +13,7 @@ aws_secret_access_key = *************
 ```
 
 ## Installation
+
 ```
 git clone https://github.com/goargo/argo-cli /tmp/argo-cli && chmod +x /tmp/argo-cli/argo.py && sudo cp /tmp/argo-cli/argo.py /usr/local/bin/argo && rm -rf /tmp/argo-cli
 ```
