@@ -16,18 +16,22 @@ sudo cp argo.py /usr/bin/argo
 
 # Commands
 ```
-api master 🐷   argo --help
+$ argo -h
 usage: argo [-h] [-e environment]
-            {rails:console,db:dump,db:restore,rails:logs} ...
+            {rails:console,db:dump,rails:logs,kibana:open,sidekiq:logs} ...
 
 command line tool for use in ARGO dev team
 
 positional arguments:
-  {rails:console,db:dump,db:restore,rails:logs}
+  {rails:console,db:dump,rails:logs,kibana:open,sidekiq:logs}
     rails:console       Starts a rails console session to Beanstalk instance
     db:dump             Dump RDS database to a file
-    db:restore          Restore postgresql dump to RDS
-    rails:logs          Starts a tail session to rails app logs
+    rails:logs          Starts a tail session to rails app logs in the given
+                        environment
+    kibana:open         Opens Kibana logs dashboard for the selected env.
+                        (argo-api-staging, argo-api-production)
+    sidekiq:logs        Starts a tail session to sidekiq logs in the given
+                        environment
 
 optional arguments:
   -h, --help            show this help message and exit
