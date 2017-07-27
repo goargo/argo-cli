@@ -2,10 +2,15 @@ CLI tool to be used by ARGO developers, This tool was written in hopes to save t
 commands as shortcuts to repetitive workflows we have internally.
 
 ## Requirements
+- Python must be installed
 - Elastic beanstalk cli tool has to be installed. Installation instructions http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3-install.html
 - SSH certificate must be in position (~/.ssh/aws-eb-argo-api). Certificate can be found on `argo-secrets` bucket in S3
-- ~/.aws must have `argo` profile with your IAM access key and secret key from AWS
-- Python must be installed
+- ~/.aws/credentials must have `argo` profile with your IAM access key and secret key from AWS. eg
+```
+[argo]
+aws_access_key_id = ***************
+aws_secret_access_key = *************
+```
 
 ## Installation
 ```
