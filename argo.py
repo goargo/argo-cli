@@ -19,6 +19,7 @@ import webbrowser
 import re
 import commands
 from os import path
+from ConfigParser import SafeConfigParser
 
 args = None
 env = None
@@ -40,24 +41,30 @@ def get_env_vars():
 
 
 def rails_console():
-    print('Rails Console Called')
+    print('Connecting to Beanstalk Environment: %s...' % args.e)
     os.system("eb ssh %s -c 'sudo su -c \"cd /var/app/current && rails c\" --login'" % args.e)
 
 
 def db_dump():
-    print('db:dump Called')
-    print(env['ARGO_API_DATABASE_ENDPOINT'])
+    print('Fetching Environment Variables...')
+    get_env_vars()
+    out_file = args.o or (args.e + '.dump')
+    print('Dumping RDS Database %s to %s...' % (args.e, out_file))
     os.system("pg_dump --dbname=postgresql://%s:%s@%s:5432/%s --format t -f %s" % (
         env['ARGO_API_DATABASE_USER'],
         env['ARGO_API_DATABASE_PASSWORD'],
         env['ARGO_API_DATABASE_ENDPOINT'],
         env['ARGO_API_DATABASE_NAME'],
-        args.o or (args.e + '.dump')))
+        out_file))
+    print('Done' % out_file)
+
 
 
 def db_restore():
-    os.system("dropdb argo_api_development && pg_restore -d argo_api_development %s" % args.i or (args.e + '.dump'))
-
+    in_file = args.i or (args.e + '.dump')
+    print('Restoring %s to local database argo_api_development...' % in_file,args.e)
+    os.system("dropdb argo_api_development && pg_restore -d argo_api_development %s" % in_file)
+    print('Done!')
 
 def db_sync():
     db_dump()
@@ -75,10 +82,12 @@ def call_func(f):
 
 
 def rails_logs():
+    print('Connecting to Beanstalk Environment: %s...' % args.e)
     os.system("eb ssh %s -c 'sudo su -c \"tail -f /var/app/support/logs/passenger.log \" --login'" % args.e)
 
 
 def sidekiq_logs():
+    print('Connecting to Beanstalk Environment: %s...' % args.e)
     os.system("eb ssh %s -c 'sudo su -c \"tail -f /var/app/current/log/sidekiq.log \" --login'" % args.e)
 
 
@@ -91,19 +100,54 @@ def validate_requirements():
     # 4. Validate presence of eb cli
 
 
-def req_validate():
-    validate_requirements()
+def print_success(msg):
+    print('[\033[1;32mOK\033[0m] %s' % msg)
+def print_error(msg):
+    print('[\033[31mERR\033[0m] %s' % msg)
 
+def req_validate():
+    print('Validating Requirements...')
+    validate_requirements()
+    validate_aws_config()
+    validate_eb_cli()
+    validate_postgresql()
 
 def validate_ssh_key():
+    context = "SSH Certificate"
     if path.isfile(path.expanduser('~/.ssh/aws-eb-argo-api')):
-        print('[OK] SSH Certificate ')
+        print_success(context)
     else:
-        print('[ER] SSH Certficate')
+        print_error(context)
 
 
-# def validate_aws_config():
-#
+def validate_aws_config():
+    context = "AWS Credentials"
+    config_path = path.expanduser('~/.aws/credentials')
+    if path.isfile(config_path):
+        parser = SafeConfigParser()
+        try:
+            parser.read(config_path)
+            if parser.get("argo", "aws_access_key_id") and parser.get("argo", "aws_secret_access_key"):
+                print_success(context)
+        except Exception:
+            print_error(context)
+    else:
+        print_error(context)
+
+def validate_eb_cli():
+    context = "EB CLI Tool"
+    if any(os.access(os.path.join(path, 'eb'), os.X_OK) for path in os.environ["PATH"].split(os.pathsep)):
+        print_success(context)
+    else:
+        print_error(context)
+
+def validate_postgresql():
+    context = "PostgreSQL"
+    if any(os.access(os.path.join(path, 'pg_dump'), os.X_OK) for path in os.environ["PATH"].split(os.pathsep)):
+        print_success(context)
+    else:
+        print_error(context)
+
 # def validate_postgresql():
 #
 # def validate_eb_cli():
@@ -174,9 +218,6 @@ def main():
     parser.add_argument('-e', metavar="environment", default="argo-api-staging",
                         help="Beanstalk environment to run the commands on. (argo-api-production, argo-api-staging, ..etc)")
     args = parser.parse_args()
-
-    # get env vars
-    get_env_vars()
 
     # execute command
     command = args.command.replace(':', '_')
