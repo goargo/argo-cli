@@ -62,7 +62,7 @@ def db_dump():
 
 def db_restore():
     in_file = args.i or (args.e + '.dump')
-    print('Restoring %s to local database argo_api_development...' % in_file,args.e)
+    print("Restoring %s to local database argo_api_development..." % in_file)
     os.system("dropdb argo_api_development && pg_restore -d argo_api_development %s" % in_file)
     print('Done!')
 
