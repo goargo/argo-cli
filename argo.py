@@ -19,6 +19,7 @@ import webbrowser
 import re
 import commands
 from os import path
+
 args = None
 env = None
 kibanaEndpoints = {
@@ -80,6 +81,7 @@ def rails_logs():
 def sidekiq_logs():
     os.system("eb ssh %s -c 'sudo su -c \"tail -f /var/app/current/log/sidekiq.log \" --login'" % args.e)
 
+
 def validate_requirements():
     validate_ssh_key()
     # TODO:
@@ -89,15 +91,17 @@ def validate_requirements():
     # 4. Validate presence of eb cli
 
 
-
 def req_validate():
     validate_requirements()
+
 
 def validate_ssh_key():
     if path.isfile(path.expanduser('~/.ssh/aws-eb-argo-api')):
         print('[OK] SSH Certificate ')
     else:
         print('[ER] SSH Certficate')
+
+
 # def validate_aws_config():
 #
 # def validate_postgresql():
@@ -164,11 +168,11 @@ def main():
                           description="Opens Kibana logs dashboard for the selected env. (argo-api-staging, argo-api-production)",
                           help="Opens Kibana logs dashboard for the selected env. (argo-api-staging, argo-api-production)")
 
-
-    subparsers.add_parser('req:validate', help="Validates that all requirements needed by the CLI tool are satisfied on your local machine ")
+    subparsers.add_parser('req:validate',
+                          help="Validates that all requirements needed by the CLI tool are satisfied on your local machine ")
     # subparsers.add_parser('get:env:vars')
     parser.add_argument('-e', metavar="environment", default="argo-api-staging",
-                        help="Beanstalk environment to run the commands on")
+                        help="Beanstalk environment to run the commands on. (argo-api-production, argo-api-staging, ..etc)")
     args = parser.parse_args()
 
     # get env vars
@@ -177,7 +181,6 @@ def main():
     # execute command
     command = args.command.replace(':', '_')
     call_func(command)
-
 
 
 if __name__ == '__main__':
