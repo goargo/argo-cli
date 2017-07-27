@@ -18,7 +18,7 @@ sudo cp argo.py /usr/bin/argo
 ```
 $ argo -h
 usage: argo [-h] [-e environment]
-            {db:dump,db:restore,rails:console,rails:logs,sidekiq:logs,kibana:open}
+            {db:dump,db:restore,rails:console,rails:logs,sidekiq:logs,kibana:open,req:validate}
             ...
 
        d8888 8888888b.   .d8888b.   .d88888b.
@@ -35,13 +35,14 @@ usage: argo [-h] [-e environment]
 
 
 positional arguments:
-  {db:dump,db:restore,rails:console,rails:logs,sidekiq:logs,kibana:open}
+  {db:dump,db:restore,rails:console,rails:logs,sidekiq:logs,kibana:open,req:validate}
     db:dump             Dump RDS database to a local file. note: doesn't work with production environment
     db:restore          Restore postgresql dump to local db (argo_api_development)
     rails:console       Starts a rails console session to Beanstalk instance
     rails:logs          Starts a tail session to rails app logs in the given environment
     sidekiq:logs        Starts a tail session to sidekiq logs in the given environment
     kibana:open         Opens Kibana logs dashboard for the selected env. (argo-api-staging, argo-api-production)
+    req:validate        Validates that all requirements needed by the CLI tool are satisfied on your local machine
 
 optional arguments:
   -h, --help            show this help message and exit
