@@ -38,7 +38,7 @@ usage: argo [-h] [-e environment]
    d88P  888 8888888P"  888  88888 888     888
   d88P   888 888 T88b   888    888 888     888
  d8888888888 888  T88b  Y88b  d88P Y88b. .d88P
- d88P     888 888   T88b  "Y8888P88  "Y88888P"
+d88P     888 888   T88b  "Y8888P88  "Y88888P"
 
                          Trade Solutions GmbH
                                  Made in ARGO
