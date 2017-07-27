@@ -1,13 +1,13 @@
 CLI tool to be used by ARGO developers, This tool was written in hopes to save the dev team time by having these
 commands as shortcuts to repetitive workflows we have internally.
 
-# Requirements
+## Requirements
 - Elastic beanstalk cli tool has to be installed. Installation instructions http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3-install.html
 - SSH certificate must be in position (~/.ssh/aws-eb-argo-api). Certificate can be found on `argo-secrets` bucket in S3
 - ~/.aws must have `argo` profile with your IAM access key and secret key from AWS
 - Python must be installed
 
-# Installation
+## Installation
 ```
 git clone https://github.com/goargo/argo-cli /tmp/argo-cli && chmod +x /tmp/argo-cli/argo.py && sudo cp /tmp/argo-cli/argo.py /usr/local/bin/argo && rm -rf /tmp/argo-cli
 ```
@@ -18,7 +18,7 @@ To make sure you have all the requirements. Run
 argo req:validate
 ```
 
-# Commands
+## Commands
 ```
 $ argo -h
 usage: argo [-h] [-e environment]
