@@ -113,6 +113,7 @@ def main():
         epilog="Keep Confedential",
         formatter_class=argparse.RawTextHelpFormatter,
         description="""
+        \033[34m
        d8888 8888888b.   .d8888b.   .d88888b.
       d88888 888   Y88b d88P  Y88b d88P" "Y88b
      d88P888 888    888 888    888 888     888
@@ -124,6 +125,7 @@ def main():
 
                          Trade Solutions GmbH
                                  Made in ARGO
+        \033[0m
     """
     )
     subparsers = parser.add_subparsers(dest='command')

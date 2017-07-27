@@ -12,6 +12,12 @@ commands as shortcuts to repetitive workflows we have internally.
 git clone https://github.com/goargo/argo-cli /tmp/argo-cli && chmod +x /tmp/argo-cli/argo.py && sudo cp /tmp/argo-cli/argo.py /usr/local/bin/argo && rm -rf /tmp/argo-cli
 ```
 
+# Validate Requirements
+To make sure you have all the requirements. Run
+```
+argo req:validate
+```
+
 # Commands
 ```
 $ argo -h
@@ -19,7 +25,7 @@ usage: argo [-h] [-e environment]
             {db:dump,db:restore,rails:console,rails:logs,sidekiq:logs,kibana:open,req:validate}
             ...
 
-       d8888 8888888b.   .d8888b.   .d88888b.
+      \x1b[6;30;42m d8888 8888888b.   .d8888b.   .d88888b.
       d88888 888   Y88b d88P  Y88b d88P" "Y88b
      d88P888 888    888 888    888 888     888
     d88P 888 888   d88P 888        888     888
