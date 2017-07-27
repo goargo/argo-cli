@@ -9,9 +9,7 @@ commands as shortcuts to repetitive workflows we have internally.
 
 # Installation
 ```
-cd /tmp && git clone https://github.com/goargo/argo-cli && cd argo-cli
-chmod +x argo.py
-sudo cp argo.py /usr/bin/argo
+git clone https://github.com/goargo/argo-cli /tmp/argo-cli && chmod +x /tmp/argo-cli/argo.py && sudo cp /tmp/argo-cli/argo.py /usr/local/bin/argo && rm -rf /tmp/argo-cli
 ```
 
 # Commands
