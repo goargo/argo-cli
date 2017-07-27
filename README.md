@@ -25,7 +25,7 @@ usage: argo [-h] [-e environment]
             {db:dump,db:restore,rails:console,rails:logs,sidekiq:logs,kibana:open,req:validate}
             ...
 
-      \x1b[6;30;42m d8888 8888888b.   .d8888b.   .d88888b.
+       d8888 8888888b.   .d8888b.   .d88888b.
       d88888 888   Y88b d88P  Y88b d88P" "Y88b
      d88P888 888    888 888    888 888     888
     d88P 888 888   d88P 888        888     888
