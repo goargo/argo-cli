@@ -56,7 +56,7 @@ def db_dump():
         env['ARGO_API_DATABASE_ENDPOINT'],
         env['ARGO_API_DATABASE_NAME'],
         out_file))
-    print('Done' % out_file)
+    print('Done %s' % out_file)
 
 
 
